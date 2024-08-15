@@ -4,7 +4,7 @@
     "destNamespace": "test",
     "destServer": "https://kubernetes.default.svc",
     "srcPath": "helloworld",
-    "srcRepoURL": "https://github.com/murhliza/123.git",
+    "srcRepoURL": "https://github.com/iltarsia/123.git",
     "srcTargetRevision": "",
     "valueFiles": "values.yaml",
     "CreateNamespace": true,
