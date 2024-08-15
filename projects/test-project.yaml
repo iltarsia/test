@@ -25,31 +25,31 @@ spec:
   syncPolicy:
       applicationsSync: create-update
       preserveResourcesOnDeletion: true
-    template:
-      metadata:
-        name: '{{ userGivenName }}'
-        namespace: argocd
-        labels:
-          app.kubernetes.io/name: '{{ appName }}'
-      spec:
-        destination:
-          namespace: '{{ destNamespace }}'
-          server: '{{ destServer }}'
-        ignoreDifferences:
-        - group: argoproj.io
-          jsonPointers:
-          - /status
-          kind: Application
-        project: test
-        source:
-          repoURL: '{{ srcRepoURL }}'
-          targetRevision: '{{ srcTargetRevision }}'
-          path: '{{ srcPath }}'
-        syncPolicy:
-          automated:
-            allowEmpty: true
-            prune: false
-            selfHeal: false
-          syncOptions:
-          - CreateNamespace={{ CreateNamespace }}
+  template:
+    metadata:
+      name: '{{ userGivenName }}'
+      namespace: argocd
+      labels:
+        app.kubernetes.io/name: '{{ appName }}'
+    spec:
+      destination:
+        namespace: '{{ destNamespace }}'
+        server: '{{ destServer }}'
+      ignoreDifferences:
+      - group: argoproj.io
+        jsonPointers:
+        - /status
+        kind: Application
+      project: test
+      source:
+        repoURL: '{{ srcRepoURL }}'
+        targetRevision: '{{ srcTargetRevision }}'
+        path: '{{ srcPath }}'
+      syncPolicy:
+        automated:
+          allowEmpty: true
+          prune: false
+          selfHeal: false
+        syncOptions:
+        - CreateNamespace={{ CreateNamespace }}
 status: {}
