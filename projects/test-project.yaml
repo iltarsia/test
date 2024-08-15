@@ -22,6 +22,9 @@ spec:
           project: ""
           source:
             repoURL: ""
+            helm:
+              valueFiles:
+                - '{{ valueFiles }}'
   syncPolicy:
       applicationsSync: create-update
       preserveResourcesOnDeletion: true
