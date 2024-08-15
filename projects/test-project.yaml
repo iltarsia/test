@@ -22,3 +22,59 @@ spec:
   sourceRepos:
   - '*'
 status: {}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  creationTimestamp: null
+  name: test
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      files:
+      - path: apps/test/**/local/config.json
+      repoURL: https://github.com/iltarsia/test.git
+      requeueAfterSeconds: 20
+      revision: ""
+      template:
+        metadata:
+          name: '{{ userGivenName }}-local'
+        spec:
+          destination: {}
+          project: ""
+          source:
+            repoURL: ""
+  syncPolicy:
+      applicationsSync: create-update
+      preserveResourcesOnDeletion: true
+    template:
+      metadata:
+        name: '{{ userGivenName }}'
+        namespace: argocd
+        labels:
+          app.kubernetes.io/name: '{{ appName }}'
+      spec:
+        destination:
+          namespace: '{{ destNamespace }}'
+          server: '{{ destServer }}'
+        ignoreDifferences:
+        - group: argoproj.io
+          jsonPointers:
+          - /status
+          kind: Application
+        project: test
+        source:
+          repoURL: '{{ srcRepoURL }}'
+          targetRevision: '{{ srcTargetRevision }}'
+          path: '{{ srcPath }}'
+        syncPolicy:
+          automated:
+            allowEmpty: true
+            prune: false
+            selfHeal: false
+          syncOptions:
+          - CreateNamespace={{ CreateNamespace }}
+status: {}
